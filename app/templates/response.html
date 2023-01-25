@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Response for {{ url }}</title>
+    <link rel="stylesheet" type="text/css" href="../static/style.css">
+</head>
+<body>
+<div class="container-result">
+    <h2>Input URL</h2>
+    <code>{{ url }}</code>
+    <h2>Reverse DNS</h2>
+    <code>{{ reverse_dns }}</code>
+    <h2>WHOIS</h2>
+    <code>
+        <dl>
+            {% for key, value in whois.items() %}
+            <dt>{{ key|e }}</dt>
+            <dd>{{ value|e }}</dd>
+            {% endfor %}
+        </dl>
+    </code>
+    <h2>Redirections</h2>
+    <code>{{ analyse_redirections }}</code>
+</div>
+</body>
+</html>
