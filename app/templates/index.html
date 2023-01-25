@@ -6,8 +6,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/style.css') }}">
-    <link rel="icon" type="image/x-icon" href="{{ url_for('static', path='/koala.png') }}">
+    <link rel="stylesheet" type="text/css" href="../static/style.css">
+    <link rel="icon" type="image/x-icon" href="../static/koala.png">
 </head>
 <body>
 <div class="container">
@@ -19,17 +19,17 @@
         </div>
         <input type="submit" value="Envoyer" class="button" id="button">
     </form>
-    <img src="{{ url_for('static', path='/nnneon.svg') }}" alt="Illustration" class="illustration">
+    <img src="../static/nnneon.svg" alt="Illustration" class="illustration">
 </div>
 
 <script>
-var input = document.getElementById("input");
-input.addEventListener("keypress", function(event) {
-  if (event.key === "Enter") {
-    event.preventDefault();
-    document.getElementById("button").click();
-  }
-});
+    var input = document.getElementById("input");
+    input.addEventListener("keypress", function (event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            document.getElementById("button").click();
+        }
+    });
 </script>
 
 </body>
