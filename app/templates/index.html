@@ -12,13 +12,19 @@
 <body>
 <div class="container">
     <h1>ScanURL</h1>
+    <p>Retrieve a WHOIS, IP, reverse DNS and redirections analysis of a URL or first level domain</p>
+    <p>E.g.: https://www.youtube.com OR twitter.com</p>
     <form method="POST" action="/">
         <div class="search-container">
-            <input type="text" placeholder="Search..." name="url" id="input">
+            <input type="text" placeholder="Search..." name="input" id="input" required="required" pattern="^(?:a-zA-Z0-9?.)+[a-zA-Z]{2,6}$|^(https?://)?(www.)?[-a-zA-Z0-9@:%.+~#=]{2,256}.[a-z]{2,4}\b([-a-zA-Z0-9@:%+.~#?&//=]*)">
             <i class="fa fa-search"></i>
         </div>
         <input type="submit" value="Envoyer" class="button" id="button">
     </form>
+    {% if variable is defined %}
+    <label>Hmmm... Let's not say there was an error but rather that I'm still learning 👍</label>
+    {% else %}
+    {% endif %}
     <img src="../static/nnneon.svg" alt="Illustration" class="illustration">
 </div>
 

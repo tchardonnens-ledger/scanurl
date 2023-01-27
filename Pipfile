@@ -8,6 +8,7 @@ ipwhois = "*"
 fastapi = {extras = ["all"], version = "*"}
 requests = "*"
 tldextract = "*"
+tld = "*"
 
 [dev-packages]
 

@@ -2,12 +2,32 @@ import socket
 from ipwhois import IPWhois
 import requests
 import tldextract
+import tld
 
 
-def get_ip(url):
-    extracted_domain = tldextract.extract(url)
-    domain = extracted_domain.domain + '.' + extracted_domain.suffix
-    ip_address = socket.gethostbyname(domain)
+def _is_url(input_string):
+    try:
+        tld.get_tld(input_string, as_object=True)
+        return True
+    except tld.exceptions.TldBadUrl:
+        return False
+
+
+def _get_domain(url):
+    first_level_domain = tld.get_fld(url)
+    print(url, first_level_domain)
+    return first_level_domain
+
+
+def _get_url_from_domain(domain):
+    return "https://"+domain
+
+
+def get_ip(input):
+    if _is_url(input):
+        ip_address = socket.gethostbyname(_get_domain(input))
+    else:
+        ip_address = socket.gethostbyname(input)
     return ip_address
 
 
@@ -22,27 +42,29 @@ def get_whois(ip_address):
     return whois
 
 
-def analyse_redirections(url, depth=0, max_depth=100):
+def analyse_redirections(input, depth=0, max_depth=100):
+    url = ""
+    if _is_url(input):
+        url = input
+    else:
+        domain = input
+        url = _get_url_from_domain(domain)
     r = requests.head(url)
 
     if r.status_code != requests.codes.ok:
-        print(f"Erreur HTTP {r.status_code} à la profondeur {depth}: {url}")
-        return
+        return f"HTTP error {r.status_code} at depth {depth} for {url}"
 
     redirect_url = r.headers.get("location")
 
     if redirect_url:
         try:
-            r = requests.head(redirect_url)
+            if depth >= max_depth:
+                return f"Too many redirections {depth}: {redirect_url}"
+
         except requests.exceptions.MissingSchema:
-            print(f"Erreur: URL de redirection non valide à la profondeur {depth}: {redirect_url}")
-            return
+            return f"Redirection for URL {redirect_url} not valid at depth {depth}"
 
-        if depth >= max_depth:
-            print(f"Erreur: Trop de redirections à la profondeur {depth}: {redirect_url}")
-            return
-
-        print(f"Redirection trouvée à la profondeur {depth}: {redirect_url}")
         analyse_redirections(redirect_url, depth=depth + 1, max_depth=max_depth)
+        return f"URL Redirection {redirect_url} found at depth {depth}"
     else:
-        print("Aucune redirection trouvée")
+        return f"No redirection found from {redirect_url}"
