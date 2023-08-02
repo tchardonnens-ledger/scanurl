@@ -1,14 +1,17 @@
-FROM python:3.11
+FROM python:3.11 AS build
 
-COPY ./requirements.txt /code/requirements.txt
+COPY Pipfile Pipfile.lock ./
 
-RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
+RUN pip install pipenv && \
+  pipenv install --system --deploy --ignore-pipfile
 
-COPY ./app /code/app
+FROM python:3.11-slim AS runtime
 
 WORKDIR /code
 
+COPY --from=build /usr/local /usr/local
+COPY . .
+
 EXPOSE 3002
 
-# If running behind a proxy like Nginx or Traefik add --proxy-headers
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "3002", "--proxy-headers"]

@@ -1,7 +1,6 @@
 import socket
 from ipwhois import IPWhois
 import requests
-import tldextract
 import tld
 
 
