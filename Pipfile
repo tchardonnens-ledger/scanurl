@@ -9,6 +9,9 @@ fastapi = {extras = ["all"], version = "*"}
 requests = "*"
 tldextract = "*"
 tld = "*"
+databases = "*"
+sqlalchemy = "*"
+aiosqlite = "*"
 
 [dev-packages]
 
