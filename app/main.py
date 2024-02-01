@@ -77,7 +77,7 @@ class JSONData(BaseModel):
 
 @app.post("/log")
 async def log_json(data: JSONData):
-    json_str = json.dumps(data.data)
+    json_str = json.dumps(data)
     query = json_table.insert().values(content=json_str)
     await database.execute(query)
     return {"message": "JSON logged successfully"}
