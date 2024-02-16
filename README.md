@@ -1,6 +1,6 @@
 # ScanURL
 
-ScanURL is a web-based tool that can be used for OSINT (Open Source Intelligence) purposes. The tool retrieves various pieces of information about a URL or a first level domain. The information retrieved includes WHOIS, IP, reverse DNS and redirections analysis.
+ScanURL is a web-based tool that can be used to retrieve various pieces of information about a URL or a first level domain. The information retrieved includes WHOIS, IP, reverse DNS and redirections analysis.
 
 ## How it works
 
